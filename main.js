@@ -1,0 +1,2 @@
+let secuenciaMaquina = [];
+let secuenciaUsuario = [];
