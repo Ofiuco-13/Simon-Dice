@@ -1,10 +1,26 @@
 let secuenciaMaquina = [];
 let secuenciaUsuario = [];
+let ronda = 0;
 
-const startButton = document.querySelector('#startButton');
+const botonComenzar = document.querySelector("#comenzar-juego");
+const mensaje = document.querySelector("#mensaje");
 
-function startGame() {
-    startButton.className = 'hidden';
+function siguientePaso() {
+  const cuadrados = ["rojo", "amarillo", "azul", "verde"];
+  const aleatorio = cuadrados[Math.floor(Math.random() * cuadrados.length)];
+
+  return random;
 }
 
-startButton.addEventListener('click', startGame);
+function siguienteRonda() {
+  ronda++;
+  const siguienteSecuencia = [...sequence];
+}
+
+function iniciarJuego() {
+  botonComenzar.className = "oculto";
+  mensaje.className = "";
+  mensaje.textContent = "Turno de la maquina";
+}
+
+botonComenzar.addEventListener("click", iniciarJuego);
