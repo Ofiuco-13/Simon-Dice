@@ -1,40 +1,37 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html>
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Simon Dice</title>
+    <title>Juego</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
 </head>
-
 <body>
     <main class="juego">
         <header>
             <h1 class="cabecera js-cabecera">Microsoft Dice</h1>
         </header>
-
-        <section class="cuadrado-container js-container unclickable">
+    
+        <section class="cuadrado-contenedor js-contenedor unclickable">
             <div class="cuadrado cuadrado-rojo" data-cuadrado="rojo"></div>
             <div class="cuadrado cuadrado-verde" data-cuadrado="verde"></div>
             <div class="cuadrado cuadrado-azul" data-cuadrado="azul"></div>
             <div class="cuadrado cuadrado-amarillo" data-cuadrado="amarillo"></div>
         </section>
-
+    
         <footer class="info-seccion">
-            <button class="boton-comenzar js-comenzar">Jugar</button>
+            <button class="comenzar-boton js-comenzar">comenzar</button>
             <span class="info js-info oculto"></span>
         </footer>
     </main>
-
+    
     <div class="oculto">
-        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3" data-sonido="red"></audio>
-        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" data-sonido="green"></audio>
-        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3" data-sonido="blue"></audio>
-        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3" data-sonido="yellow"></audio>
+        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3" data-sonido="rojo"></audio>
+        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" data-sonido="verde"></audio>
+        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3" data-sonido="azul"></audio>
+        <audio src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3" data-sonido="amarillo"></audio>
     </div>
-    <script src='main.js'></script>
+    <script src="main.js"></script>
 </body>
-
 </html>
