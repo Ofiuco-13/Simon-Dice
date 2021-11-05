@@ -78,5 +78,19 @@ botonComenzar.addEventListener("click", iniciarJuego);
 contenedorCuadrados.addEventListener("click", (event) => {
   const { cuadrado } = event.target.dataset;
 
-  if (cuadrado) manejarClick(cuadrado);
-});
+function activarCuadrado(color) {
+  const cuadrado = document.querySelector(`[data-cuadrado='${color}']`);
+  const sonido = document.querySelector(`[data-sonido='${color}']`);
+
+  cuadrado.classList.add("activated");
+  sonido.play();
+
+  setTimeout(() => {
+    cuadrado.classList.remove("activated");
+  }, 300);
+}
+
+function turnoUsuario(ronda) {
+  contenedorCuadrados.classList.remove("unclickable");
+  info.textContent = `Tu turno: ${ronda} Click${ronda > 1 ? "s" : ""}`;
+}
