@@ -3,80 +3,98 @@ let secuenciaUsuario = [];
 let ronda = 0;
 
 const botonComenzar = document.querySelector(".js-comenzar");
-const info = document.querySelector(".info-seccion");
-const cabecera = document.querySelector('.js-cabecera');
-const contenedorTitulo = document.querySelector('.js-container')
-function resetearJuego(texto) {
-  alert(texto);
-  secuenciaMaquina = [];
-  secuenciaUsuario = [];
-  ronda = 0;
-  botonComenzar.classList.remove('oculto');
-  cabecera.textContent = 'Microsoft Dice';
-  info.classList.add('oculto');
-  contenedorCuadrados.classList.add('unclickable');
-}
+const info = document.querySelector(".js-info");
+const cabecera = document.querySelector(".js-cabecera");
+const contenedorCuadrados = document.querySelector(".js-contenedor");
 
-function turnoUsuario(ronda) {
-  contenedorTitulo.classList.remove('unclickable');
-  info.textContent = `Tu turno: ${ronda} Tap${ronda > 1 ? 's' : '' }`
-}
+botonComenzar.addEventListener("click", comenzarJuego);
 
-function activarCuadrado(color) {
-  const cuadrado = document.querySelector(`[data-cuadrado='${color}']`);
-  const sonido = document.querySelector(`[data-sonido='${color}']`);
+contenedorCuadrados.addEventListener("click", (event) => {
+  const { cuadrado } = event.target.dataset;
 
-  cuadrado.classList.add("activated");
-  sonido.play();
+  if (cuadrado) manejarClick(cuadrado);
+});
 
-  setTimeout(() => {
-    tile.classList.remove("activated");
-  }, 300);
-}
-
-function jugarRonda(siguienteSecuencia) {
-  siguienteSecuencia.forEach((color, i) => {
-    setTimeout(() => {
-      activarCuadrado(color);
-    }, (i + 1) * 600);
-  });
-}
-
-function comenzarSiguientePaso() {
-  const cuadrados = ["rojo", "verde", "azul", "amarillo"];
-  const aleatorio = cuadrados[Math.floor(Math.random() * cuadrados.length)];
-
-  return aleatorio;
-}
-
-function comenzarSiguienteRonda() {
-  ronda++;
-
-  const siguienteSecuencia = [...secuenciaMaquina];
-  siguienteSecuencia.push(comenzarSiguientePaso());
-  jugarRonda(siguienteSecuencia);
-
-  secuenciaMaquina = [...siguienteSecuencia];
-  setTimeout(() => {
-    turnoUsuario(ronda);
-  }, ronda * 600 + 1000);
-}
-
-  info.textContent = `Tu turno: ${tapsRestantes} Tap${
-    tapsRestantes > 1 ? "s" : ""
-  }`;
-}
-
-function iniciarJuego() {
+function comenzarJuego() {
   botonComenzar.classList.add("oculto");
   info.classList.remove("oculto");
   info.textContent = "Turno de la maquina";
   comenzarSiguienteRonda();
 }
 
-botonComenzar.addEventListener("click", iniciarJuego);
-contenedorCuadrados.addEventListener("click", (event) => {
-  const { cuadrado } = event.target.dataset;
+function comenzarSiguienteRonda() {
+  ronda += 1;
+
+  contenedorCuadrados.classList.add("unclickable");
+  info.textContent = "Turno de la maquina";
+  cabecera.textContent = `ronda ${ronda} de 20`;
+
+  const siguienteRonda = [...secuenciaMaquina];
+  siguienteRonda.push(comenzarSiguientePaso());
+  jugarRonda(siguienteRonda);
+
+  secuenciaMaquina = [...siguienteRonda];
+  setTimeout(() => {
+    turnoUsuario(ronda);
+  }, ronda * 600 + 1000);
+}
+
+function comenzarSiguientePaso() {
+  const tiles = ["rojo", "verde", "azul", "amarillo"];
+  const random = tiles[Math.floor(Math.random() * tiles.length)];
+
+  return random;
+}
+
+function manejarClick(cuadrado) {
+  const index = secuenciaUsuario.push(cuadrado) - 1;
+  const sonido = document.querySelector(`[data-sonido='${cuadrado}']`);
+  sonido.play();
+
+  const clicksRestantes = secuenciaMaquina.length - secuenciaUsuario.length;
+
+  if (secuenciaUsuario[index] !== secuenciaMaquina[index]) {
+    resetearJuego("Perdiste!");
+    return;
+  }
+
+  if (secuenciaUsuario.length === secuenciaMaquina.length) {
+    if (secuenciaUsuario.length === 20) {
+      resetearJuego("Felicidades, completaste todas las rondas!");
+      return;
+    }
+
+    secuenciaUsuario = [];
+    info.textContent = "Vas bien, sigue!";
+    setTimeout(() => {
+      comenzarSiguienteRonda();
+    }, 1000);
+    return;
+  }
+
+  info.textContent = `Tu turno: ${clicksRestantes} Click${
+    clicksRestantes > 1 ? "s" : ""
+  }`;
+}
+
+function resetearJuego(texto) {
+  alert(texto);
+  secuenciaMaquina = [];
+  secuenciaUsuario = [];
+  ronda = 0;
+  botonComenzar.classList.remove("oculto");
+  cabecera.textContent = "Simon Game";
+  info.classList.add("oculto");
+  contenedorCuadrados.classList.add("unclickable");
+}
+
+function jugarRonda(siguienteRonda) {
+  siguienteRonda.forEach((color, index) => {
+    setTimeout(() => {
+      activarCuadrado(color);
+    }, (index + 1) * 600);
+  });
+}
 
 function activarCuadrado(color) {
   const cuadrado = document.querySelector(`[data-cuadrado='${color}']`);
