@@ -83,7 +83,7 @@ function resetearJuego(texto) {
   secuenciaUsuario = [];
   ronda = 0;
   botonComenzar.classList.remove("oculto");
-  cabecera.textContent = "Simon Game";
+  cabecera.textContent = "Microsoft Dice";
   info.classList.add("oculto");
   contenedorCuadrados.classList.add("unclickable");
 }
